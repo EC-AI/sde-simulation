@@ -17,7 +17,7 @@ class get_pybind_include(object):
 
 ext_modules = [
     Extension(
-        'sde_simulator',
+        'sde_simulator_cpp',
         ['main.cpp'],
         include_dirs=[
             get_pybind_include(),
