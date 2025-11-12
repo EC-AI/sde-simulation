@@ -1,14 +1,13 @@
-import sde_simulator_cpp as cpplib
+""""
+Test file
+"""
+
 import matplotlib.pyplot as plt
-
-def euler_maruyama(x0, T, n_steps, a=lambda x: 0, b=lambda x: 1):
-    return cpplib.euler_maruyama(x0, a, b, T, n_steps)
-
-
+from sde_simulation import euler_maruyama, milstein
 
 def main():
     # Simulation parameters
-    x0 = 2  # Initial X value
+    x0 = 3  # Initial X value
     mu = 0.05   # Drift (5% per year)
     sigma = 0.2 # Volatility (20% per year)
     T = 1.0     # Time horizon (1 year)
@@ -16,7 +15,7 @@ def main():
 
     print("Running GBM simulation with C++ backend...")
     # Call the C++ function from Python
-    path = euler_maruyama(x0, T=T, n_steps=n_steps, a=lambda x: 3-x, b=lambda x: 3 * x**.5)
+    path = milstein(x0, T=T, n_steps=n_steps, a=lambda x: 3-x, b=lambda x: .2)
     print("Simulation complete.")
 
     # Plot the results
