@@ -1,5 +1,6 @@
-from setuptools import setup, Extension
-import sys
+from setuptools import setup
+from pybind11.setup_helpers import Pybind11Extension
+import os
 
 # A helper class to get pybind11 include paths
 class get_pybind_include(object):
@@ -16,15 +17,16 @@ class get_pybind_include(object):
         return pybind11.get_include(self.user)
 
 ext_modules = [
-    Extension(
+    Pybind11Extension(
         'sde_simulator_cpp',
-        ['lib/main.cpp'],
+        ['src/main.cpp', 'src/simulator.cpp'],
         include_dirs=[
             get_pybind_include(),
             get_pybind_include(user=True),
+            os.path.abspath('src'),
         ],
         language='c++'
     ),
 ]
 
-setup(name='sde_simulator', ext_modules=ext_modules, version='0.0.2')
+setup(name='sde_simulator', ext_modules=ext_modules, version='0.0.3')
