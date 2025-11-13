@@ -17,19 +17,19 @@ You will need a C++ compiler and Python installed.
 2.  **Install dependencies:**
     This project requires `pybind11`, `setuptools`, and `matplotlib`.
     ```sh
-    pip install pybind11 setuptools matplotlib
+    pip install .
     ```
 
 3.  **Build the C++ extension:**
     Run the setup script. This will compile `main.cpp` into a Python module.
     ```sh
-    python setup.py install
+    python -m build
     ```
 
 4.  **Run the simulation:**
     Execute the example Python script.
     ```sh
-    python simulate.py
+    python ./tests/simulate.py
     ```
 
     This will run the simulation and display a plot of the resulting GBM path.
