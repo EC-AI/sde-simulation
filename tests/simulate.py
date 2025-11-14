@@ -17,6 +17,7 @@ def main():
     # Call the C++ function from Python
     path = milstein(x0, T=T, n_steps=n_steps, a=lambda x: 3-x, b=lambda x: .2, db_dx=lambda x: 0)
     print("Simulation complete.")
+    print(type(path))
 
     # Plot the results
     plt.plot(path)

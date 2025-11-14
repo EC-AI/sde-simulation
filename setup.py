@@ -29,4 +29,4 @@ ext_modules = [
     ),
 ]
 
-setup(name='sde_simulator', ext_modules=ext_modules, version='0.0.3')
+setup(name='sde_simulator', ext_modules=ext_modules)

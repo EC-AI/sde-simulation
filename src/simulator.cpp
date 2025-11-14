@@ -2,7 +2,7 @@
 #include <random>
 #include <cmath>
 
-std::vector<double> euler_maruyama(
+py::array_t<double> euler_maruyama(
     double x0, 
     const std::function<double(double)> &a, 
     const std::function<double(double)> &b, 
@@ -24,7 +24,10 @@ std::vector<double> euler_maruyama(
         path[i+1] = path[i] + a(path[i]) * dt + b(path[i]) * dW;
     }
 
-    return path;
+    return py::array_t<double>(
+        path.size(),
+        path.data()
+    );
 }
 
 /**
@@ -38,7 +41,7 @@ std::vector<double> euler_maruyama(
  * @param n_steps Number of time steps.
  * @return A vector of doubles representing the simulated path.
  */
-std::vector<double> milstein(
+py::array_t<double> milstein(
     double x0, 
     const std::function<double(double)> &a, 
     const std::function<double(double)> &b, 
@@ -60,5 +63,8 @@ std::vector<double> milstein(
         path[i+1] = path[i] + a(path[i]) * dt + b(path[i]) * dW + 0.5 * b(path[i]) * db_dx(path[i]) * (dW * dW - dt);
     }
 
-    return path;
+    return py::array_t<double>(
+        path.size(),
+        path.data()
+    );
 }

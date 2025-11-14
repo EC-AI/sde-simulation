@@ -16,7 +16,7 @@ def euler_maruyama(x0, T, n_steps, a=lambda x: 0, b=lambda x: 1):
         b (callable, optional): The diffusion function b(x). Defaults to b(x) = 1.
 
     Returns:
-        list[float]: A list of simulated values of the process at each time step.
+        numpy.ndarray: A list of simulated values of the process at each time step.
     """
     return cpplib.euler_maruyama(x0, a, b, T, n_steps)
 
@@ -38,7 +38,7 @@ def milstein(x0, T, n_steps, a=lambda x: 0, b=None, db_dx=None):
         db_dx (callable): The derivative of the diffusion function `b` with respect to x.
 
     Returns:
-        list[float]: A list of simulated values of the process at each time step.
+        numpy.ndarray: A list of simulated values of the process at each time step.
 
     Raises:
         ValueError: If b or db_dx are not provided.

@@ -1,7 +1,11 @@
 #pragma once
 
+#include <pybind11/pybind11.h>
+#include <pybind11/numpy.h>
 #include <vector>
 #include <functional>
+
+namespace py = pybind11;
 
 /**
  * @brief Simulates a path of an SDE of the form dX = a(X) dt + b(X) dW using Euler's method.
@@ -13,7 +17,7 @@
  * @param n_steps Number of time steps.
  * @return A vector of doubles representing the simulated path.
  */
-std::vector<double> euler_maruyama(
+py::array_t<double> euler_maruyama(
     double x0, 
     const std::function<double(double)> &a, 
     const std::function<double(double)> &b, 
@@ -32,7 +36,7 @@ std::vector<double> euler_maruyama(
  * @param n_steps Number of time steps.
  * @return A vector of doubles representing the simulated path.
  */
-std::vector<double> milstein(
+py::array_t<double> milstein(
     double x0, 
     const std::function<double(double)> &a, 
     const std::function<double(double)> &b, 
