@@ -1,7 +1,15 @@
 
 import sde_simulator_cpp as cpplib
+from typing import Callable, Optional
+import numpy as np
 
-def euler_maruyama(x0, T, n_steps, a=lambda x: 0, b=lambda x: 1):
+def euler_maruyama(
+        x0: float,
+        T: float,
+        n_steps: int,
+        a: Optional[Callable[[float], float]] = lambda x: 0,
+        b: Optional[Callable[[float], float]] = lambda x: 1
+    ) -> np.ndarray:
     """
     Simulates a stochastic differential equation (SDE) using the Euler-Maruyama method.
 
@@ -20,7 +28,14 @@ def euler_maruyama(x0, T, n_steps, a=lambda x: 0, b=lambda x: 1):
     """
     return cpplib.euler_maruyama(x0, a, b, T, n_steps)
 
-def milstein(x0, T, n_steps, a=lambda x: 0, b=None, db_dx=None):
+def milstein(
+        x0: float,
+        T: float,
+        n_steps: int,
+        a: Optional[Callable[[float], float]] = lambda x: 0,
+        b: Callable[[float], float] = None,
+        db_dx: Callable[[float], float] = None,
+    ) -> np.ndarray:
     """
     Simulates a stochastic differential equation (SDE) using the Milstein scheme.
 
