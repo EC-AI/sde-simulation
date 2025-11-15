@@ -2,8 +2,12 @@
 Test file
 """
 
-import matplotlib.pyplot as plt
-from sde_simulation import euler_maruyama, milstein
+import sde_simulation as sde
+
+try:
+    import matplotlib.pyplot as plt
+except ImportError:
+    raise ImportError(f"Optional dependency Matplotlib is required for plotting. Please install it using 'pip install matplotlib' or install this package with optional ploting dependencies using 'pip install {sde.__name__}[plot]'.")
 
 def main():
     # Simulation parameters
@@ -13,14 +17,16 @@ def main():
     T = 1.0     # Time horizon (1 year)
     n_steps = 252 # Number of steps (e.g., trading days in a year)
 
-    print("Running GBM simulation with C++ backend...")
-    # Call the C++ function from Python
-    path = milstein(x0, T=T, n_steps=n_steps, a=lambda x: 3-x, b=lambda x: .2, db_dx=lambda x: 0)
+    print("Running simulation with C++ backend...")
+    
+    em = sde.euler_maruyama(x0, T=T, n_steps=n_steps, a=lambda x: 3-x, b=lambda x: x**(1/2))
+    mil = sde.milstein(x0, T=T, n_steps=n_steps, a=lambda x: 3-x, b=lambda x: x**(1/2), db_dx=lambda x: 0.5*(x)**(-.5))
     print("Simulation complete.")
-    print(type(path))
+    print(type(em))
 
     # Plot the results
-    plt.plot(path)
+    plt.plot(em, label="E-M")
+    plt.plot(mil, label="Milstein")
     plt.title("SDE Simulation")
     plt.xlabel("Time Steps")
     plt.ylabel("Price")
