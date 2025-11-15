@@ -10,7 +10,7 @@ PYBIND11_MODULE(sde_simulator_cpp, m) {
     m.doc() = "High-performance SDE simulator using C++";
 
     m.def("euler_maruyama", &euler_maruyama, 
-        "Simulates a path of an SDE of the form dX = a(X) dt + b(X) dW using Euler's method.",
+        "Simulates a path of an SDE of the form dX = a(X, t) dt + b(X, t) dW using Euler's method.",
         py::arg("x0"),
         py::arg("a"),
         py::arg("b"),
@@ -18,7 +18,7 @@ PYBIND11_MODULE(sde_simulator_cpp, m) {
         py::arg("n_steps"));
 
     m.def("milstein", &milstein, 
-        "Simulates a path of an SDE of the form dX = a(X) dt + b(X) dW using Milstein's scheme.",
+        "Simulates a path of an SDE of the form dX = a(X, t) dt + b(X, t) dW using Milstein's scheme.",
         py::arg("x0"),
         py::arg("a"),
         py::arg("b"),

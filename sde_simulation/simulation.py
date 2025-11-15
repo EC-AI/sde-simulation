@@ -7,8 +7,8 @@ def euler_maruyama(
         x0: float,
         T: float,
         n_steps: int,
-        a: Optional[Callable[[float], float]] = lambda x: 0,
-        b: Optional[Callable[[float], float]] = lambda x: 1
+        a: Optional[Callable[[float, float], float]] = lambda x, t: 0,
+        b: Optional[Callable[[float, float], float]] = lambda x, t: 1
     ) -> np.ndarray:
     """
     Simulates a stochastic differential equation (SDE) using the Euler-Maruyama method.
@@ -20,8 +20,8 @@ def euler_maruyama(
         x0 (float): The initial value of the process at t=0.
         T (float): The end time of the simulation.
         n_steps (int): The number of steps to use in the simulation.
-        a (callable, optional): The drift function a(x). Defaults to a(x) = 0.
-        b (callable, optional): The diffusion function b(x). Defaults to b(x) = 1.
+        a (callable, optional): The drift function a(x, t). Defaults to a(x, t) = 0.
+        b (callable, optional): The diffusion function b(x, t). Defaults to b(x, t) = 1.
 
     Returns:
         numpy.ndarray: A list of simulated values of the process at each time step.
@@ -32,9 +32,9 @@ def milstein(
         x0: float,
         T: float,
         n_steps: int,
-        a: Optional[Callable[[float], float]] = lambda x: 0,
-        b: Callable[[float], float] = None,
-        db_dx: Callable[[float], float] = None,
+        a: Optional[Callable[[float, float], float]] = lambda x, t: 0,
+        b: Callable[[float, float], float] = None,
+        db_dx: Callable[[float, float], float] = None,
     ) -> np.ndarray:
     """
     Simulates a stochastic differential equation (SDE) using the Milstein scheme.
@@ -48,9 +48,9 @@ def milstein(
         x0 (float): The initial value of the process at t=0.
         T (float): The end time of the simulation.
         n_steps (int): The number of steps to use in the simulation.
-        a (callable, optional): The drift function a(x). Defaults to a(x) = 0.
-        b (callable): The diffusion function b(x).
-        db_dx (callable): The derivative of the diffusion function `b` with respect to x.
+        a (callable, optional): The drift function a(x, t). Defaults to a(x, t) = 0.
+        b (callable): The diffusion function b(x, t).
+        db_dx (callable): The derivative of the diffusion function `b` with respect to x, db/dx(x, t).
 
     Returns:
         numpy.ndarray: A list of simulated values of the process at each time step.
