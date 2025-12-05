@@ -33,4 +33,5 @@ dev = [
     "build",
     "nbstripout",
     "nbconvert",
+    "twine",
 ]
