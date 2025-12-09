@@ -13,6 +13,7 @@ py::array_t<double> euler_maruyama(
     path[0] = x0;
 
     double dt = T / n_steps;
+    double sqrt_dt = std::sqrt(dt);
     double t;
     double dW;
 
@@ -23,7 +24,7 @@ py::array_t<double> euler_maruyama(
 
     for (int i = 0; i < n_steps; ++i) {
         t = i * dt;
-        dW = distribution(generator);
+        dW = distribution(generator)*sqrt_dt;
         path[i+1] = path[i] + a(path[i], t) * dt + b(path[i], t) * dW;
     }
 
@@ -45,6 +46,7 @@ py::array_t<double> milstein(
     path[0] = x0;
 
     double dt = T / n_steps;
+    double sqrt_dt = std::sqrt(dt);
     double t;
     double dW;
     double bxt;
@@ -56,7 +58,7 @@ py::array_t<double> milstein(
 
     for (int i = 0; i < n_steps; ++i) {
         t = i * dt;
-        dW = distribution(generator);
+        dW = distribution(generator)*sqrt_dt;
         bxt = b(path[i], t);
         path[i+1] = path[i] + a(path[i], t) * dt + bxt * dW + 0.5 * bxt * db_dx(path[i], t) * (dW * dW - dt);
     }
