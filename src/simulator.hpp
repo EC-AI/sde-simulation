@@ -14,7 +14,8 @@ namespace py = pybind11;
  * @param a Drift function a(x, t).
  * @param b Volatility function b(x, t).
  * @param T Time horizon.
- * @param n_steps Number of time steps.
+ * @param n_steps Number of time steps. 
+ * @param random_variates A numpy array of normal random variates.
  * @return A vector of doubles representing the simulated path.
  */
 py::array_t<double> euler_maruyama(
@@ -22,7 +23,8 @@ py::array_t<double> euler_maruyama(
     const std::function<double(double, double)> &a, 
     const std::function<double(double, double)> &b, 
     double T, 
-    int n_steps
+    int n_steps,
+    py::array_t<double> random_variates
 );
 
 /**
@@ -33,7 +35,8 @@ py::array_t<double> euler_maruyama(
  * @param b Volatility function b(x, t).
  * @param db_dx First derivative of b with respect to x, db/dx(x, t).
  * @param T Time horizon.
- * @param n_steps Number of time steps.
+ * @param n_steps Number of time steps. 
+ * @param random_variates A numpy array of normal random variates.
  * @return A vector of doubles representing the simulated path.
  */
 py::array_t<double> milstein(
@@ -42,5 +45,6 @@ py::array_t<double> milstein(
     const std::function<double(double, double)> &b, 
     const std::function<double(double, double)> &db_dx, 
     double T, 
-    int n_steps
+    int n_steps,
+    py::array_t<double> random_variates
 );
