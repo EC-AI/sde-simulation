@@ -27,9 +27,11 @@ def euler_maruyama(
         B_increments (ArrayLike, optional): Increments for the driving process to use for integration. If `None` it will generate random variates with mean 0 and variance `T/n_steps`.
 
     Returns:
-        numpy.ndarray: A list of simulated values of the process at each time step.
+        numpy.ndarray: A list of simulated values of the process at each time step. Shape is `(n_steps+1,)`.
     """
     if B_increments is not None:
+        if len(B_increments) != n_steps:
+            raise ValueError("B_increments must have the same length as n_steps")
         B_increments = np.asarray(B_increments)
     else:
         dt = T / n_steps
@@ -63,7 +65,7 @@ def milstein(
         B_increments (ArrayLike, optional): Increments for the driving process to use for integration. If `None` it will generate random variates with mean 0 and variance `T/n_steps`.
 
     Returns:
-        numpy.ndarray: A list of simulated values of the process at each time step.
+        numpy.ndarray: A list of simulated values of the process at each time step. Shape is `(n_steps+1,)`.
 
     Raises:
         ValueError: If b or db_dx are not provided.
@@ -71,6 +73,8 @@ def milstein(
     if db_dx is None or b is None:
         raise ValueError("b and db_dx must be provided for Milstein scheme")
     if B_increments is not None:
+        if len(B_increments) != n_steps:
+            raise ValueError("B_increments must have the same length as n_steps")
         B_increments = np.asarray(B_increments)
     else:
         dt = T / n_steps

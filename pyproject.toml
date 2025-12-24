@@ -34,4 +34,5 @@ dev = [
     "nbstripout",
     "nbconvert",
     "twine",
+    "pytest",
 ]
