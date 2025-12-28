@@ -61,9 +61,50 @@ class TestSimulation():
         np.testing.assert_allclose(mil, test_mil)
 
     def test_malformed_function_calls(self):
-        # TODO: Implement
-        pytest.skip()
+        
+        # Test invalid type for x0
+        with pytest.raises(TypeError):
+            sde_simulation.euler_maruyama("invalid", self.T, self.n_steps, self.a, self.b)
+        with pytest.raises(TypeError):
+            sde_simulation.milstein("invalid", self.T, self.n_steps, self.a, self.b, self.db_dx)
 
+        # Test invalid type for T
+        with pytest.raises(TypeError):
+            sde_simulation.euler_maruyama(self.x0, "invalid", self.n_steps, self.a, self.b)
+        with pytest.raises(TypeError):
+            sde_simulation.milstein(self.x0, "invalid", self.n_steps, self.a, self.b, self.db_dx)
 
-#if __name__ == "__main__":
-#    pytest.main([__file__])
+        # Test invalid type for n_steps
+        with pytest.raises(TypeError):
+            sde_simulation.euler_maruyama(self.x0, self.T, "invalid", self.a, self.b)
+        with pytest.raises(TypeError):
+            sde_simulation.milstein(self.x0, self.T, "invalid", self.a, self.b, self.db_dx)
+
+        # Test invalid type for a
+        with pytest.raises(TypeError):
+            sde_simulation.euler_maruyama(self.x0, self.T, self.n_steps, "invalid", self.b)
+        with pytest.raises(TypeError):
+            sde_simulation.milstein(self.x0, self.T, self.n_steps, "invalid", self.b, self.db_dx)
+
+        # Test invalid type for b
+        with pytest.raises(TypeError):
+            sde_simulation.euler_maruyama(self.x0, self.T, self.n_steps, self.a, "invalid")
+        with pytest.raises(TypeError):
+            sde_simulation.milstein(self.x0, self.T, self.n_steps, self.a, "invalid", self.db_dx)
+
+        # Test invalid type for db_dx
+        with pytest.raises(TypeError):
+            sde_simulation.milstein(self.x0, self.T, self.n_steps, self.a, self.b, "invalid")
+
+        # Test invalid type for B_increments
+        with pytest.raises(TypeError):
+            sde_simulation.euler_maruyama(self.x0, self.T, self.n_steps, self.a, self.b, "invalid")
+        with pytest.raises(TypeError):
+            sde_simulation.milstein(self.x0, self.T, self.n_steps, self.a, self.b, self.db_dx, "invalid")
+
+        # Test invalid dimensions for Brownian increments
+        wrong_increments = np.zeros(self.n_steps + 1)
+        with pytest.raises(ValueError):
+            sde_simulation.euler_maruyama(self.x0, self.T, self.n_steps, self.a, self.b, wrong_increments)
+        with pytest.raises(ValueError):
+            sde_simulation.milstein(self.x0, self.T, self.n_steps, self.a, self.b, self.db_dx, wrong_increments)
