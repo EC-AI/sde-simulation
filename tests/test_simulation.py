@@ -98,9 +98,9 @@ class TestSimulation():
 
         # Test invalid type for B_increments
         with pytest.raises(TypeError):
-            sde_simulation.euler_maruyama(self.x0, self.T, self.n_steps, self.a, self.b, "invalid")
+            sde_simulation.euler_maruyama(self.x0, self.T, self.n_steps, self.a, self.b, 0)
         with pytest.raises(TypeError):
-            sde_simulation.milstein(self.x0, self.T, self.n_steps, self.a, self.b, self.db_dx, "invalid")
+            sde_simulation.milstein(self.x0, self.T, self.n_steps, self.a, self.b, self.db_dx, 0)
 
         # Test invalid dimensions for Brownian increments
         wrong_increments = np.zeros(self.n_steps + 1)
