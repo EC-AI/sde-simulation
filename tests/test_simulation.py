@@ -1,3 +1,4 @@
+import os
 import pytest
 import sde_simulator_cpp
 import sde_simulation
@@ -46,8 +47,9 @@ class TestSimulation():
 
     def test_seeded_simulation(self):
         SEED = 42
-        EM_PATH = "tests/data/test_euler_maruyama"
-        MIL_PATH = "tests/data/test_milstein"
+        base_dir = os.path.dirname(__file__)
+        EM_PATH = os.path.join(base_dir, "data", "test_euler_maruyama")
+        MIL_PATH = os.path.join(base_dir, "data", "test_milstein")
 
         test_em = np.loadtxt(EM_PATH, delimiter=',')
         test_mil = np.loadtxt(MIL_PATH, delimiter=',')
