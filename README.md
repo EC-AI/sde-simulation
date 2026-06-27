@@ -17,7 +17,7 @@ python ./tests/simulate.py
 
 ## Usage
 
-You can use the simulator in python by importing it. The two main functions are `euler_maruyama` and `milstein`, which solve the SDE $dX_t = a(X_t, t)dt + b(X_t, t)dW_t$ and $dX_t = a(X_t, t)dt + b(X_t, t)dW_t + 0.5b(X_t, t)b'(X_t, t)dt$ using the Euler-Maruyama and Milstein schemes, respectively.
+You can use the simulator in python by importing it. The two main functions are `euler_maruyama` and `milstein`, which solve the SDE $dX_t = a(X_t, t) dt + b(X_t, t) dB_t$ using the Euler-Maruyama and Milstein schemes, respectively.
 
 ```python
 import sde_simulation
