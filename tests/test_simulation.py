@@ -62,6 +62,21 @@ class TestSimulation():
         np.testing.assert_allclose(em, test_em)
         np.testing.assert_allclose(mil, test_mil)
 
+    def test_constant_diffusion_equivalence(self):
+        # When the diffusion function b is constant, db_dx is 0.
+        # The Milstein scheme should reduce exactly to the Euler-Maruyama scheme.
+        SEED = 100
+        gen = np.random.default_rng(SEED)
+        
+        constant_b = lambda x, t: 2.5
+        db_dx = lambda x, t: 0.0
+        
+        B_increments = gen.normal(0, np.sqrt(self.T/self.n_steps), self.n_steps)
+        em = sde_simulation.euler_maruyama(self.x0, self.T, self.n_steps, self.a, constant_b, B_increments)
+        mil = sde_simulation.milstein(self.x0, self.T, self.n_steps, self.a, constant_b, db_dx, B_increments)
+        
+        np.testing.assert_allclose(em, mil, rtol=1e-12, atol=1e-12)
+
     def test_malformed_function_calls(self):
         
         # Test invalid type for x0
